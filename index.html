@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños!</title>
+    <title>¡Feliz Cumpleaños Fifi!</title>
     <style>
         * {
             margin: 0;
@@ -12,184 +12,185 @@
         }
 
         body {
-            background-color: #ffcce6; /* Rosa más suave */
+            background-color: #ffcce6; /* Fondo rosa */
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
             height: 100vh;
-            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Contenedor principal */
-        .container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Mesa de madera */
-        .table {
+        /* Estilos para la mesa de madera */
+        .wooden-table {
             position: absolute;
             bottom: 0;
             width: 100%;
             height: 20%;
-            background-color: #8B4513; /* Color marrón */
-            background-image: linear-gradient(to bottom, #A0522D, #8B4513);
+            background: linear-gradient(to bottom, #8B4513, #A0522D);
             border-top: 10px solid #654321;
+            z-index: 1;
         }
 
-        /* Pastel */
+        /* Estilos para el pastel */
         .cake {
             position: absolute;
+            width: 200px;
+            height: 120px;
             bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
+            z-index: 2;
+            opacity: 0;
+            animation: cakeFall 2s forwards;
+        }
+
+        .cake-bottom {
+            position: absolute;
             width: 200px;
-            height: 150px;
-            animation: cakeFall 1.5s ease-out forwards;
-            opacity: 0;
-        }
-
-        .layer {
-            position: absolute;
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
-        }
-
-        .bottom-layer {
-            height: 60px;
-            bottom: 0;
-            background-color: #5D4037; /* Chocolate */
-        }
-
-        .middle-layer {
             height: 50px;
-            bottom: 50px;
-            width: 80%;
-            left: 10%;
-            background-color: #FFFFFF; /* Blanco */
-            border: 2px solid #f0f0f0;
+            background-color: #5D4037; /* Chocolate */
+            border-radius: 10px 10px 0 0;
+            bottom: 0;
         }
 
-        .top-layer {
+        .cake-middle {
+            position: absolute;
+            width: 190px;
             height: 40px;
+            background-color: #FFF; /* Blanco */
+            border-radius: 10px 10px 0 0;
+            bottom: 50px;
+            left: 5px;
+        }
+
+        .cake-top {
+            position: absolute;
+            width: 180px;
+            height: 30px;
+            background-color: #FF4081; /* Fresa */
+            border-radius: 10px 10px 0 0;
             bottom: 90px;
-            width: 60%;
-            left: 20%;
-            background-color: #ffb6c1; /* Rosa */
-            border: 2px solid #ff91a4;
+            left: 10px;
         }
 
-        /* Decoración del pastel */
-        .decoration {
-            position: absolute;
-            width: 100%;
-        }
-
-        .frosting {
-            position: absolute;
-            height: 10px;
-            background-color: #fff;
-            border-radius: 5px;
-        }
-
-        .top-frosting {
-            top: -5px;
-            width: 100%;
-            background-color: #ffb6c1;
-        }
-
-        /* Cerezas */
-        .cherries {
-            position: absolute;
-            bottom: 130px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            display: flex;
-            justify-content: space-around;
-            opacity: 0;
-            animation: cherriesAppear 1s ease-out 4s forwards;
-        }
-
-        .cherry {
-            width: 20px;
-            height: 20px;
-            background-color: #ff0000;
-            border-radius: 50%;
-            position: relative;
-            box-shadow: inset -3px -3px 5px rgba(0,0,0,0.3);
-        }
-
-        .cherry-stem {
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 10px;
-            background-color: #8B4513;
-        }
-
-        /* Texto de feliz cumpleaños */
-        .birthday-text {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 3rem;
-            font-weight: bold;
-            text-align: center;
-            opacity: 0;
-            animation: textAppear 1s ease-out 3s forwards, colorChange 3s infinite 4s;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* Confeti */
-        .confetti-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0;
-            animation: confettiAppear 1s 2s forwards;
-        }
-
+        /* Estilos para el confeti */
         .confetti {
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: #f00;
-            top: -10px;
-            opacity: 0.7;
+            opacity: 0.8;
+            z-index: 4;
         }
 
-        /* Globos */
-        .balloons {
+        /* Estilos para el texto */
+        .birthday-text {
             position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            top: 20%;
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
             opacity: 0;
-            animation: balloonsAppear 1s 5s forwards;
+            z-index: 5;
+            animation: textAppear 2s 4s forwards, colorChange 3s infinite alternate;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
+        /* Estilos para la carta */
+        .letter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 6;
+            opacity: 0;
+            animation: letterAppear 1s 6s forwards;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'Georgia', serif;
+        }
+
+        .letter h2 {
+            color: #E91E63;
+            margin-bottom: 15px;
+        }
+
+        .letter p {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Estilos para los globos */
         .balloon {
             position: absolute;
-            bottom: -100px;
+            width: 50px;
+            height: 70px;
             border-radius: 50%;
-            animation: balloonRise linear infinite;
+            bottom: -100px;
+            z-index: 7;
         }
 
         .balloon-string {
             position: absolute;
-            bottom: -30px;
-            left: 50%;
             width: 2px;
-            height: 30px;
+            height: 50px;
             background-color: #333;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Estilos para la galería */
+        .gallery {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            z-index: 8;
+            opacity: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .gallery img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+        }
+
+        /* Botón de audio */
+        .audio-control {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         /* Animaciones */
@@ -198,8 +199,8 @@
                 bottom: 100%;
                 opacity: 1;
             }
-            80% {
-                bottom: 22%;
+            70% {
+                bottom: 20%;
                 opacity: 1;
             }
             100% {
@@ -208,141 +209,208 @@
             }
         }
 
-        @keyframes confettiAppear {
-            to {
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
                 opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
             }
         }
 
         @keyframes textAppear {
-            to {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
                 opacity: 1;
+                transform: scale(1);
             }
         }
 
         @keyframes colorChange {
-            0% { color: red; }
-            20% { color: orange; }
-            40% { color: yellow; }
-            60% { color: green; }
-            80% { color: blue; }
-            100% { color: purple; }
-        }
-
-        @keyframes cherriesAppear {
-            to {
-                opacity: 1;
+            0% {
+                color: #ff0000;
+            }
+            20% {
+                color: #ff9900;
+            }
+            40% {
+                color: #ffff00;
+            }
+            60% {
+                color: #00ff00;
+            }
+            80% {
+                color: #00ffff;
+            }
+            100% {
+                color: #9900ff;
             }
         }
 
-        @keyframes balloonsAppear {
-            to {
+        @keyframes letterAppear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
                 opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
             }
         }
 
         @keyframes balloonRise {
-            to {
+            0% {
+                bottom: -100px;
+                opacity: 1;
+            }
+            100% {
                 bottom: 100%;
+                opacity: 1;
+            }
+        }
+
+        @keyframes galleryAppear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="table"></div>
-        
-        <div class="cake">
-            <div class="layer bottom-layer"></div>
-            <div class="layer middle-layer"></div>
-            <div class="layer top-layer"></div>
-            <div class="decoration top-frosting"></div>
-            <div class="cherries">
-                <div class="cherry">
-                    <div class="cherry-stem"></div>
-                </div>
-                <div class="cherry">
-                    <div class="cherry-stem"></div>
-                </div>
-                <div class="cherry">
-                    <div class="cherry-stem"></div>
-                </div>
-            </div>
-        </div>
-        
-        <h1 class="birthday-text">¡Feliz Cumpleaños!</h1>
-        
-        <div class="confetti-container" id="confetti-container"></div>
-        
-        <div class="balloons" id="balloons-container"></div>
+    <div class="wooden-table"></div>
+    <div class="cake">
+        <div class="cake-bottom"></div>
+        <div class="cake-middle"></div>
+        <div class="cake-top"></div>
+    </div>
+    <div class="birthday-text">¡Feliz Cumpleaños Fifi!</div>
+    <div class="letter">
+        <h2>Para Fifi</h2>
+        <p>Doy gracias a diosito por tu vida, feliz cumpleaños</p>
+    </div>
+    
+    <div class="gallery" id="gallery">
+        <!-- La imagen se cargará dinámicamente -->
     </div>
 
+    <!-- Audio para la canción -->
+    <audio id="birthdaySong" loop>
+        <source src="cat.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <button class="audio-control" id="audioToggle">🔊</button>
+
     <script>
-        // Crear confeti
+        // Función para crear confeti
         function createConfetti() {
-            const container = document.getElementById('confetti-container');
-            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
             
             for (let i = 0; i < 150; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                
-                // Crear estilos para la animación de caída del confeti
-                const fallDuration = Math.random() * 3 + 2;
-                confetti.style.animation = `confettiFall ${fallDuration}s linear infinite`;
-                confetti.style.animationDelay = Math.random() * 5 + 's';
-                
-                // Añadir keyframes dinámicamente
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes confettiFall {
-                        0% {
-                            transform: translateY(0) rotate(0deg);
-                        }
-                        100% {
-                            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-                
-                container.appendChild(confetti);
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.top = `${Math.random() * -100}px`;
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear infinite`;
+                confetti.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(confetti);
             }
         }
 
-        // Crear globos
+        // Función para crear globos
         function createBalloons() {
-            const container = document.getElementById('balloons-container');
-            const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink'];
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff9900'];
             
             for (let i = 0; i < 15; i++) {
-                const balloon = document.createElement('div');
-                balloon.className = 'balloon';
-                
-                // Tamaño aleatorio
-                const size = Math.random() * 40 + 30;
-                balloon.style.width = size + 'px';
-                balloon.style.height = size * 1.2 + 'px';
-                balloon.style.left = Math.random() * 100 + 'vw';
-                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                balloon.style.animationDuration = Math.random() * 10 + 10 + 's';
-                balloon.style.animationDelay = Math.random() * 5 + 's';
-                
-                // Añadir cuerda al globo
-                const string = document.createElement('div');
-                string.className = 'balloon-string';
-                balloon.appendChild(string);
-                
-                container.appendChild(balloon);
+                setTimeout(() => {
+                    const balloon = document.createElement('div');
+                    balloon.className = 'balloon';
+                    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    balloon.style.left = `${Math.random() * 90 + 5}vw`;
+                    balloon.style.animation = `balloonRise ${Math.random() * 10 + 10}s linear infinite`;
+                    balloon.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    const string = document.createElement('div');
+                    string.className = 'balloon-string';
+                    
+                    balloon.appendChild(string);
+                    document.body.appendChild(balloon);
+                }, i * 500);
             }
+            
+            // Reproducir música cuando aparecen los globos
+            playBirthdaySong();
         }
 
-        // Iniciar animaciones cuando la página cargue
+        // Función para mostrar la galería
+        function showGallery() {
+            const gallery = document.getElementById('gallery');
+            
+            // Crear y añadir la imagen
+            const img = document.createElement('img');
+            img.src = 'kitty.jpeg';
+            img.alt = 'Foto de Fifi';
+            img.onerror = function() {
+                // Si la imagen no se carga, mostrar un mensaje
+                gallery.innerHTML = '<p style="text-align: center; color: #E91E63; font-size: 1.2rem;">¡Feliz Cumpleaños Fifi! 🎉</p>';
+            };
+            
+            gallery.appendChild(img);
+            gallery.style.animation = 'galleryAppear 1s forwards';
+        }
+
+        // Función para reproducir la canción
+        function playBirthdaySong() {
+            const audio = document.getElementById('birthdaySong');
+            audio.play().catch(e => {
+                console.log("La reproducción automática fue bloqueada. Haz clic en el botón de audio.");
+            });
+        }
+
+        // Inicializar animaciones
         window.onload = function() {
-            createConfetti();
-            setTimeout(createBalloons, 5000); // Los globos aparecen después de 5 segundos
+            // Crear confeti después de que caiga el pastel
+            setTimeout(createConfetti, 3000);
+            
+            // Crear globos después de que aparezca la carta
+            setTimeout(createBalloons, 7000);
+            
+            // Hacer que la carta desaparezca al hacer clic
+            document.querySelector('.letter').addEventListener('click', function() {
+                this.style.opacity = '0';
+                this.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                setTimeout(() => {
+                    this.style.display = 'none';
+                    // Mostrar la galería después de que desaparezca la carta
+                    showGallery();
+                }, 500);
+            });
+            
+            // Control de audio
+            const audioToggle = document.getElementById('audioToggle');
+            const audio = document.getElementById('birthdaySong');
+            
+            audioToggle.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    audioToggle.textContent = '🔊';
+                } else {
+                    audio.pause();
+                    audioToggle.textContent = '🔇';
+                }
+            });
         };
     </script>
 </body>
