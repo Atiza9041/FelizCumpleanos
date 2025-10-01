@@ -93,7 +93,10 @@
             text-align: center;
             opacity: 0;
             z-index: 5;
-            animation: textAppear 2s 4s forwards, colorChange 3s infinite alternate;
+            animation: textAppear 2s 6s forwards;
+            background: linear-gradient(to right, #ff0000, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #9900ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
@@ -110,7 +113,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 6;
             opacity: 0;
-            animation: letterAppear 1s 6s forwards;
+            animation: letterAppear 1s 8s forwards;
             cursor: pointer;
             text-align: center;
             font-family: 'Georgia', serif;
@@ -144,34 +147,6 @@
             bottom: -50px;
             left: 50%;
             transform: translateX(-50%);
-        }
-
-        /* Estilos para la galería */
-        .gallery {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            z-index: 8;
-            opacity: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            padding: 20px;
-        }
-
-        .gallery img {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            object-fit: contain;
         }
 
         /* Botón de audio */
@@ -209,6 +184,17 @@
             }
         }
 
+        @keyframes cherryFall {
+            0% {
+                top: -20px;
+                opacity: 1;
+            }
+            100% {
+                top: 15%;
+                opacity: 1;
+            }
+        }
+
         @keyframes confettiFall {
             0% {
                 transform: translateY(-100px) rotate(0deg);
@@ -228,27 +214,6 @@
             100% {
                 opacity: 1;
                 transform: scale(1);
-            }
-        }
-
-        @keyframes colorChange {
-            0% {
-                color: #ff0000;
-            }
-            20% {
-                color: #ff9900;
-            }
-            40% {
-                color: #ffff00;
-            }
-            60% {
-                color: #00ff00;
-            }
-            80% {
-                color: #00ffff;
-            }
-            100% {
-                color: #9900ff;
             }
         }
 
@@ -273,17 +238,6 @@
                 opacity: 1;
             }
         }
-
-        @keyframes galleryAppear {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
     </style>
 </head>
 <body>
@@ -298,10 +252,6 @@
         <h2>Para Fifi</h2>
         <p>Doy gracias a diosito por tu vida, feliz cumpleaños</p>
     </div>
-    
-    <div class="gallery" id="gallery">
-        <!-- La imagen se cargará dinámicamente -->
-    </div>
 
     <!-- Audio para la canción -->
     <audio id="birthdaySong" loop>
@@ -312,6 +262,36 @@
     <button class="audio-control" id="audioToggle">🔊</button>
 
     <script>
+        // Función para crear cerezas
+        function createCherries() {
+            const cake = document.querySelector('.cake');
+            const cakeRect = cake.getBoundingClientRect();
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const cherry = document.createElement('div');
+                    cherry.className = 'cherry';
+                    
+                    // Posicionar las cerezas sobre el pastel
+                    const leftPosition = cakeRect.left + 50 + (Math.random() * 100);
+                    cherry.style.left = `${leftPosition}px`;
+                    cherry.style.top = '-20px';
+                    
+                    // Crear el tallo de la cereza
+                    const stem = document.createElement('div');
+                    stem.className = 'cherry-stem';
+                    cherry.appendChild(stem);
+                    
+                    document.body.appendChild(cherry);
+                    
+                    // Animación de caída de cerezas
+                    setTimeout(() => {
+                        cherry.style.animation = `cherryFall 1s forwards`;
+                    }, 100);
+                }, i * 500);
+            }
+        }
+
         // Función para crear confeti
         function createConfetti() {
             const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
@@ -354,23 +334,6 @@
             playBirthdaySong();
         }
 
-        // Función para mostrar la galería
-        function showGallery() {
-            const gallery = document.getElementById('gallery');
-            
-            // Crear y añadir la imagen
-            const img = document.createElement('img');
-            img.src = 'kitty.jpeg';
-            img.alt = 'Foto de Fifi';
-            img.onerror = function() {
-                // Si la imagen no se carga, mostrar un mensaje
-                gallery.innerHTML = '<p style="text-align: center; color: #E91E63; font-size: 1.2rem;">¡Feliz Cumpleaños Fifi! 🎉</p>';
-            };
-            
-            gallery.appendChild(img);
-            gallery.style.animation = 'galleryAppear 1s forwards';
-        }
-
         // Función para reproducir la canción
         function playBirthdaySong() {
             const audio = document.getElementById('birthdaySong');
@@ -381,11 +344,14 @@
 
         // Inicializar animaciones
         window.onload = function() {
-            // Crear confeti después de que caiga el pastel
-            setTimeout(createConfetti, 3000);
+            // Crear cerezas después de que caiga el pastel
+            setTimeout(createCherries, 2500);
+            
+            // Crear confeti después de las cerezas
+            setTimeout(createConfetti, 4000);
             
             // Crear globos después de que aparezca la carta
-            setTimeout(createBalloons, 7000);
+            setTimeout(createBalloons, 9000);
             
             // Hacer que la carta desaparezca al hacer clic
             document.querySelector('.letter').addEventListener('click', function() {
@@ -393,8 +359,6 @@
                 this.style.transform = 'translate(-50%, -50%) scale(0.5)';
                 setTimeout(() => {
                     this.style.display = 'none';
-                    // Mostrar la galería después de que desaparezca la carta
-                    showGallery();
                 }, 500);
             });
             
